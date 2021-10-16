@@ -115,7 +115,7 @@
         "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
         "longNamingInfix": "[toLower(parameters('vmssName'))]",
         "addressPrefix": "10.0.0.0/16",
-        "subnetPrefix": "10.0.0.0/24",
+        "subnetPrefix": "10.0.10.0/24",
         "publicIPAddressName": "[concat(variables('namingInfix'), 'pip')]",
         "loadBalancerName": "[concat(variables('namingInfix'), 'lb')]",
         "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
@@ -134,7 +134,7 @@
                 "reference": {
                     "publisher": "MicrosoftWindowsDesktop",
                     "offer": "Windows-10",
-                    "sku": "19h2-evd",
+                    "sku": "20h2-evd",
                     "version": "latest"
                 }
             }
