@@ -130,7 +130,7 @@
         "ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
         "frontEndIPConfigID": "[resourceId('Microsoft.Network/loadBalancers/frontendIPConfigurations',variables('loadBalancerName'),'loadBalancerFrontEnd')]",
         "imageReference": {
-            "19h2-evd": {
+            "windows-evd": {
                 "reference": {
                     "publisher": "MicrosoftWindowsDesktop",
                     "offer": "Windows-10",
