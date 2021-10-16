@@ -148,9 +148,8 @@
                     "version": "latest"
                 }
             }
-        },
-        "webDeployPackageFullPath": "[uri(parameters('_artifactsLocation'), concat(parameters('webDeployPackage'), parameters('_artifactsLocationSasToken')))]",
-        "powershelldscZipFullPath": "[uri(parameters('_artifactsLocation'), concat(parameters('powershelldscZip'), parameters('_artifactsLocationSasToken')))]",
+        }//,
+        //"powershellScriptSetupShare": "[uri(parameters('_artifactsLocation'), concat(parameters('powershelldscZip')))]"
     },
     "resources": [
         {
@@ -291,25 +290,25 @@
                     "extensionProfile": {
                         "extensions": [
                             {
-                                "name": "Microsoft.Powershell.DSC",
-                                "properties": {
-                                    "publisher": "Microsoft.Powershell",
-                                    "type": "DSC",
-                                    "typeHandlerVersion": "2.9",
-                                    "autoUpgradeMinorVersion": true,
-                                    "forceUpdateTag": "[parameters('powershelldscUpdateTagVersion')]",
-                                    "settings": {
-                                        "configuration": {
-                                            "url": "[variables('powershelldscZipFullPath')]",
-                                            "script": "InstallIIS.ps1",
-                                            "function": "InstallIIS"
-                                        },
-                                        "configurationArguments": {
-                                            "nodeName": "localhost",
-                                            "WebDeployPackagePath": "[variables('webDeployPackageFullPath')]"
-                                        }
-                                    }
-                                }
+                                //"name": "Microsoft.Powershell.DSC",
+                                //"properties": {
+                                //    "publisher": "Microsoft.Powershell",
+                                //    "type": "DSC",
+                                //    "typeHandlerVersion": "2.9",
+                                //    "autoUpgradeMinorVersion": true,
+                                //    "forceUpdateTag": "[parameters('powershelldscUpdateTagVersion')]",
+                                //    "settings": {
+                                //        "configuration": {
+                                //            "url": "[variables('powershelldscZipFullPath')]",
+                                //            "script": "InstallIIS.ps1",
+                                //            "function": "InstallIIS"
+                                //        },
+                                //        "configurationArguments": {
+                                //            "nodeName": "localhost",
+                                //            "WebDeployPackagePath": "[variables('webDeployPackageFullPath')]"
+                                //        }
+                                //    }
+                                //}
                             }
                         ]
                     }

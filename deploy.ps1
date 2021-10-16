@@ -23,8 +23,7 @@ if($null -eq (Get-AzResourceGroup -Name $rgName))
 }
 
 #Deploy 2 Domain Controller load balanced with High Availability
-New-AzResourceGroupDeployment -ResourceGroupName $rgName `
--TemplateUri https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/application-workloads/active-directory/active-directory-new-domain-ha-2-dc-zones/azuredeploy.json `
+New-AzResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri https://raw.githubusercontent.com/erjenkin/DigitalStorageArch/main/DeployDCs.json `
  -adminUsername $adminUserName -adminPassword $adminPassword -location $location -domainName $domainName -dnsPrefix $dnsPrefix 
 
 #Create subnet for Azure Bastion
