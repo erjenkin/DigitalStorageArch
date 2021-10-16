@@ -115,7 +115,6 @@
         "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
         "longNamingInfix": "[toLower(parameters('vmssName'))]",
         "publicIPAddressName": "[concat(variables('namingInfix'), 'pip')]",
-        "subnetName": "[concat(variables('namingInfix'), 'subnet')]",
         "loadBalancerName": "[concat(variables('namingInfix'), 'lb')]",
         "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
         "lbProbeID": "[resourceId('Microsoft.Network/loadBalancers/probes',variables('loadBalancerName'), 'tcpProbe')]",
@@ -222,7 +221,7 @@
                 "capacity": "[parameters('instanceCount')]"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName'))]",
+                "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName'))]"
             ],
             "properties": {
                 "overprovision": true,
