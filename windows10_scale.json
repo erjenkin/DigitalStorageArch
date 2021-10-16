@@ -109,7 +109,17 @@
             "metadata": {
                 "description": "subnet Name."
             }
-        }
+        },
+        "osVersion": {
+            "type": "string",
+            "defaultValue": "19h2-evd",
+            "allowedValues": [
+                "19h2-evd"
+            ],
+            "metadata": {
+                "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
+            }
+        },
     },
     "variables": {
         "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
@@ -129,12 +139,12 @@
         "nicName": "[concat(variables('namingInfix'), 'nic')]",
         "ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
         "frontEndIPConfigID": "[resourceId('Microsoft.Network/loadBalancers/frontendIPConfigurations',variables('loadBalancerName'),'loadBalancerFrontEnd')]",
-        "imageReference": {
-            "windows-evd": {
+        "images": {
+            "19h2-evd": {
                 "reference": {
                     "publisher": "MicrosoftWindowsDesktop",
                     "offer": "Windows-10",
-                    "sku": "windows-evd",
+                    "sku": "19h2-evd",
                     "version": "latest"
                 }
             }
@@ -241,7 +251,7 @@
                             "caching": "ReadWrite",
                             "createOption": "FromImage"
                         },
-                        "imageReference": "[variables('imageReference')]"
+                        "imageReference": "[variables('images')[parameters('osVersion')].reference]",
                     },
                     "osProfile": {
                         "computerNamePrefix": "[variables('namingInfix')]",
