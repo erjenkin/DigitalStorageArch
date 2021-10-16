@@ -254,7 +254,7 @@
                                             "name": "[variables('ipConfigName')]",
                                             "properties": {
                                                 "subnet": {
-                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+                                                    "id": "[concat('/subscriptions/2c0e83a6-e4a3-412b-ba7f-4863dc479a2b/resourceGroups/wvdDemoEric/providers/Microsoft.Network/virtualNetworks/adVNET', parameters('subnetName'))]"
                                                 },
                                                 "loadBalancerBackendAddressPools": [
                                                     {
