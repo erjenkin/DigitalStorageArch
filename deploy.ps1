@@ -39,26 +39,31 @@ while($null -eq $test)
 }
 
 #Deploy 2 Domain Controller load balanced with High Availability
+Write-host "Deploying Domain Controllers this will take 5-10 minutes"
 New-AzResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri https://raw.githubusercontent.com/erjenkin/DigitalStorageArch/main/DeployDCs.json `
- -adminUsername $adminUserName -adminPassword $adminPassword -location $location -domainName $domainName
+ -adminUsername $adminUserName -adminPassword $adminPassword -location $location -domainName $domainName -Verbose
 
 #Create subnet for Azure Bastion
+Write-host "Deploying Azure Bastion Service Subnet"
 New-AzVirtualNetworkSubnetConfig -Name "AzureBastionSubnet" -AddressPrefix $bastionSubnetIpPrefix
 $virtualNetwork = Get-AzVirtualNetwork -Name $vnetName
 Add-AzVirtualNetworkSubnetConfig -Name "AzureBastionSubnet" -VirtualNetwork $virtualNetwork -AddressPrefix $bastionSubnetIpPrefix
 $virtualNetwork | Set-AzVirtualNetwork
 
 #Deploy Bastion Host for Secure connection
+Write-host "Deploying Azure Bastion Service"
 New-AzResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.network/azure-bastion/azuredeploy.json `
--vnetName $vnetName -vnetIpPrefix $vnetIpPrefix -vnetNewOrExisting "existing" -bastionHostName $bastionHostName -location $location -bastionSubnetIpPrefix $bastionSubnetIpPrefix
+-vnetName $vnetName -vnetIpPrefix $vnetIpPrefix -vnetNewOrExisting "existing" -bastionHostName $bastionHostName -location $location -bastionSubnetIpPrefix $bastionSubnetIpPrefix -Verbose
 
 #Deploy on premises file server
+Write-host "Deploying On Prem File Server"
 New-AzResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri https://raw.githubusercontent.com/erjenkin/DigitalStorageArch/main/OnPremFileServer.json `
--adminUsername $adminUserName -adminPassword $adminPassword
+-adminUsername $adminUserName -adminPassword $adminPassword -Verbose
 
 #Deploy Windows 10 Client for domain connected fireshare and resources
+Write-host "Deploying On Windows 10 Scale Sets"
 New-AzResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri https://raw.githubusercontent.com/erjenkin/DigitalStorageArch/main/windows10_scale.json `
--adminPassword $adminPassword
+-adminPassword $adminPassword -Verbose
 
 #manually added nsg with rules for home access ip
 
