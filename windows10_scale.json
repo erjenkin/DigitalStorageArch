@@ -127,7 +127,7 @@
                     "version": "latest"
                 }
             }
-        }//,
+        }
         //"powershellScriptSetupShare": "[uri(parameters('_artifactsLocation'), concat(parameters('powershelldscZip')))]"
     },
     "resources": [
@@ -265,10 +265,10 @@
                                 }
                             }
                         ]
-                    },
-                    "extensionProfile": {
-                        "extensions": [
-                            {
+                    }//,
+                    //"extensionProfile": {
+                      //  "extensions": [
+                        //    {
                                 //"name": "Microsoft.Powershell.DSC",
                                 //"properties": {
                                 //    "publisher": "Microsoft.Powershell",
@@ -288,9 +288,9 @@
                                 //        }
                                 //    }
                                 //}
-                            }
-                        ]
-                    }
+                           // }
+                        //]
+                    //}
                 }
             }
         },
