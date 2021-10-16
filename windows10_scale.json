@@ -102,6 +102,13 @@
             "metadata": {
                 "description": "vNet Name."
             }
+        },
+        "subnetName": {
+            "type": "string",
+            "defaultValue": "subnetName",
+            "metadata": {
+                "description": "vNet Name."
+            }
         }
     },
     "variables": {
@@ -248,7 +255,7 @@
                                             "name": "[variables('ipConfigName')]",
                                             "properties": {
                                                 "subnet": {
-                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetName'))]"
+                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
                                                 },
                                                 "loadBalancerBackendAddressPools": [
                                                     {
