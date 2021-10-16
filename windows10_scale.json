@@ -96,25 +96,17 @@
                 "description": "Fault Domain count for each placement group."
             }
         },
-        "addressPrefix": {
+        "virtualNetworkName": {
             "type": "string",
-            "defaultValue": "10.0.0.0/16",
+            "defaultValue": "adVNET",
             "metadata": {
-                "description": "Fault Domain count for each placement group."
-            }
-        },
-        "subnetPrefix": {
-            "type": "string",
-            "defaultValue": "10.0.0.0/24",
-            "metadata": {
-                "description": "Fault Domain count for each placement group."
+                "description": "vNet Name."
             }
         }
     },
     "variables": {
         "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
         "longNamingInfix": "[toLower(parameters('vmssName'))]",
-        "virtualNetworkName": "[concat(variables('namingInfix'), 'vnet')]",
         "publicIPAddressName": "[concat(variables('namingInfix'), 'pip')]",
         "subnetName": "[concat(variables('namingInfix'), 'subnet')]",
         "loadBalancerName": "[concat(variables('namingInfix'), 'lb')]",
@@ -224,7 +216,7 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
             ],
             "properties": {
                 "overprovision": true,
@@ -257,7 +249,7 @@
                                             "name": "[variables('ipConfigName')]",
                                             "properties": {
                                                 "subnet": {
-                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
+                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetName'))]"
                                                 },
                                                 "loadBalancerBackendAddressPools": [
                                                     {

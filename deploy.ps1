@@ -38,4 +38,6 @@ New-AzResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri https://ra
 -vnetName $vnetName -vnetIpPrefix $vnetIpPrefix -vnetNewOrExisting "existing" -bastionHostName $bastionHostName -location $location -bastionSubnetIpPrefix $bastionSubnetIpPrefix
 
 #Deploy Windows 10 Client for domain connected fireshare and resources
-$windows10EVD = Get-AzVMImageSku -Location "EastUS" -PublisherName "MicrosoftWindowsDesktop" -Offer "windows-evd"
+New-AzResourceGroupDeployment -ResourceGroupName $rgName -TemplateUri https://raw.githubusercontent.com/erjenkin/DigitalStorageArch/main/windows10_scale.json `
+-adminPassword $adminPassword
+
