@@ -97,7 +97,7 @@
       },
       "vmName": {
         "type": "string",
-        "defaultValue": "simple-vm",
+        "defaultValue": "OnPremServer",
         "metadata": {
           "description": "Name of the virtual machine."
         }
