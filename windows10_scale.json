@@ -105,9 +105,9 @@
         },
         "subnetName": {
             "type": "string",
-            "defaultValue": "subnetName",
+            "defaultValue": "scaleSet",
             "metadata": {
-                "description": "vNet Name."
+                "description": "subnet Name."
             }
         }
     },
