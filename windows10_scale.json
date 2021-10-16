@@ -4,7 +4,7 @@
     "parameters": {
         "vmSku": {
             "type": "string",
-            "defaultValue": "Standard_A1_v2",
+            "defaultValue": "B2ms",
             "metadata": {
                 "description": "Size of VMs in the VM Scale Set."
             }
@@ -20,7 +20,7 @@
         },
         "instanceCount": {
             "type": "int",
-            "defaultValue": 3,
+            "defaultValue": 2,
             "minValue": 1,
             "maxValue": 100,
             "metadata": {
@@ -103,8 +103,8 @@
     "variables": {
         "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
         "longNamingInfix": "[toLower(parameters('vmssName'))]",
-        "addressPrefix": "10.0.0.0/16",
-        "subnetPrefix": "10.0.2.0/24",
+        //"addressPrefix": "10.0.0.0/16",
+        //"subnetPrefix": "10.0.2.0/24",
         "publicIPAddressName": "[concat(variables('namingInfix'), 'pip')]",
         "loadBalancerName": "[concat(variables('namingInfix'), 'lb')]",
         "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
@@ -265,32 +265,7 @@
                                 }
                             }
                         ]
-                    }//,
-                    //"extensionProfile": {
-                      //  "extensions": [
-                        //    {
-                                //"name": "Microsoft.Powershell.DSC",
-                                //"properties": {
-                                //    "publisher": "Microsoft.Powershell",
-                                //    "type": "DSC",
-                                //    "typeHandlerVersion": "2.9",
-                                //    "autoUpgradeMinorVersion": true,
-                                //    "forceUpdateTag": "[parameters('powershelldscUpdateTagVersion')]",
-                                //    "settings": {
-                                //        "configuration": {
-                                //            "url": "[variables('powershelldscZipFullPath')]",
-                                //            "script": "InstallIIS.ps1",
-                                //            "function": "InstallIIS"
-                                //        },
-                                //        "configurationArguments": {
-                                //            "nodeName": "localhost",
-                                //            "WebDeployPackagePath": "[variables('webDeployPackageFullPath')]"
-                                //        }
-                                //    }
-                                //}
-                           // }
-                        //]
-                    //}
+                    }
                 }
             }
         },
@@ -372,3 +347,31 @@
     "outputs": {
     }
 }
+
+
+//,
+                    //"extensionProfile": {
+                      //  "extensions": [
+                        //    {
+                                //"name": "Microsoft.Powershell.DSC",
+                                //"properties": {
+                                //    "publisher": "Microsoft.Powershell",
+                                //    "type": "DSC",
+                                //    "typeHandlerVersion": "2.9",
+                                //    "autoUpgradeMinorVersion": true,
+                                //    "forceUpdateTag": "[parameters('powershelldscUpdateTagVersion')]",
+                                //    "settings": {
+                                //        "configuration": {
+                                //            "url": "[variables('powershelldscZipFullPath')]",
+                                //            "script": "InstallIIS.ps1",
+                                //            "function": "InstallIIS"
+                                //        },
+                                //        "configurationArguments": {
+                                //            "nodeName": "localhost",
+                                //            "WebDeployPackagePath": "[variables('webDeployPackageFullPath')]"
+                                //        }
+                                //    }
+                                //}
+                           // }
+                        //]
+                    //}
