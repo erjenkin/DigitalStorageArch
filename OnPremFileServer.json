@@ -22,42 +22,6 @@
           "description": "Password for the Virtual Machine."
         }
       },
-      "dnsLabelPrefix": {
-        "type": "string",
-        "defaultValue": "[toLower(format('{0}-{1}', parameters('vmName'), uniqueString(resourceGroup().id, parameters('vmName'))))]",
-        "metadata": {
-          "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
-        }
-      },
-      "publicIpName": {
-        "type": "string",
-        "defaultValue": "myPublicIP",
-        "metadata": {
-          "description": "Name for the Public IP used to access the Virtual Machine."
-        }
-      },
-      "publicIPAllocationMethod": {
-        "type": "string",
-        "defaultValue": "Dynamic",
-        "allowedValues": [
-          "Dynamic",
-          "Static"
-        ],
-        "metadata": {
-          "description": "Allocation method for the Public IP used to access the Virtual Machine."
-        }
-      },
-      "publicIpSku": {
-        "type": "string",
-        "defaultValue": "Basic",
-        "allowedValues": [
-          "Basic",
-          "Standard"
-        ],
-        "metadata": {
-          "description": "SKU for the Public IP used to access the Virtual Machine."
-        }
-      },
       "OSVersion": {
         "type": "string",
         "defaultValue": "2019-Datacenter",
@@ -125,44 +89,6 @@
         "kind": "Storage"
       },
       {
-        "type": "Microsoft.Network/publicIPAddresses",
-        "apiVersion": "2021-02-01",
-        "name": "[parameters('publicIpName')]",
-        "location": "[parameters('location')]",
-        "sku": {
-          "name": "[parameters('publicIpSku')]"
-        },
-        "properties": {
-          "publicIPAllocationMethod": "[parameters('publicIPAllocationMethod')]",
-          "dnsSettings": {
-            "domainNameLabel": "[parameters('dnsLabelPrefix')]"
-          }
-        }
-      },
-      {
-        "type": "Microsoft.Network/networkSecurityGroups",
-        "apiVersion": "2021-02-01",
-        "name": "[variables('networkSecurityGroupName')]",
-        "location": "[parameters('location')]",
-        "properties": {
-          "securityRules": [
-            {
-              "name": "default-allow-3389",
-              "properties": {
-                "priority": 1000,
-                "access": "Allow",
-                "direction": "Inbound",
-                "destinationPortRange": "3389",
-                "protocol": "Tcp",
-                "sourcePortRange": "*",
-                "sourceAddressPrefix": "*",
-                "destinationAddressPrefix": "*"
-              }
-            }
-          ]
-        }
-      },
-      {
         "type": "Microsoft.Network/virtualNetworks",
         "apiVersion": "2021-02-01",
         "name": "[variables('virtualNetworkName')]",
@@ -177,17 +103,11 @@
             {
               "name": "[variables('subnetName')]",
               "properties": {
-                "addressPrefix": "[variables('subnetPrefix')]",
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
-                }
+                "addressPrefix": "[variables('subnetPrefix')]"
               }
             }
           ]
-        },
-        "dependsOn": [
-          "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
-        ]
+        }
       },
       {
         "type": "Microsoft.Network/networkInterfaces",
@@ -200,9 +120,6 @@
               "name": "ipconfig1",
               "properties": {
                 "privateIPAllocationMethod": "Dynamic",
-                "publicIPAddress": {
-                  "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIpName'))]"
-                },
                 "subnet": {
                   "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
                 }
@@ -211,7 +128,6 @@
           ]
         },
         "dependsOn": [
-          "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIpName'))]",
           "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]"
         ]
       },
@@ -271,9 +187,5 @@
       }
     ],
     "outputs": {
-      "hostname": {
-        "type": "string",
-        "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIpName'))).dnsSettings.fqdn]"
-      }
     }
   }
